@@ -1,5 +1,4 @@
 require 'rspec'
-require './lacedeamon'
 
 RSpec.configure do|config|
   config.color = true

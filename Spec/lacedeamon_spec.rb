@@ -11,7 +11,7 @@ describe 'Lacedeamon API' do
   let(:post){HTTParty.post(url, query:{title: title, due: due})}
   let(:getall){HTTParty.get(url)}
 
-	describe 'Positive Tests' do
+	describe 'Positive' do
 
     it "should GET items" do
       r = getall
@@ -57,9 +57,25 @@ describe 'Lacedeamon API' do
       HTTParty.delete url+"#{r["id"]}"
     end
 
+    it "should create multiple items imported from a YAML file" do
+      file = File.open('item_list.yml')
+      data = YAML.load(file)
+      r = []
+
+      data.each do |i|
+        r << HTTParty.post(url, query:{title: i["title"],due: i["due"]})
+      end
+
+      r.each do |i|
+        expect(i.code).to eq(201)
+        expect(i.message).to eq("Created")
+        HTTParty.delete url+"#{i["id"]}"
+      end
+    end
+
   end
 
-  describe 'Negative Tests' do
+  describe 'Negative' do
 
     it "should throw an error when deleting a collection" do
       d = HTTParty.delete url
