@@ -11,7 +11,7 @@ describe 'Lacedeamon API' do
   let(:post){HTTParty.post(url, query:{title: title, due: due})}
   let(:getall){HTTParty.get(url)}
 
-	describe 'Positive' do
+  describe 'Positive' do
 
     it "should GET items" do
       r = getall
@@ -72,7 +72,6 @@ describe 'Lacedeamon API' do
         HTTParty.delete url+"#{i["id"]}"
       end
     end
-
   end
 
   describe 'Negative' do
@@ -122,6 +121,5 @@ describe 'Lacedeamon API' do
       expect(d.message).to eq("Unprocessable Entity")
       HTTParty.delete url+"#{r["id"]}"
     end
-
   end
 end
